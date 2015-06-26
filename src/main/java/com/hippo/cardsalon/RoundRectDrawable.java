@@ -109,7 +109,7 @@ class RoundRectDrawable extends Drawable {
 
     @Override
     public void getOutline(@NonNull Outline outline) {
-        outline.setRoundRect(mBounds, mRadius);
+        outline.setRoundRect(getBounds(), mRadius);
     }
 
     @Override

@@ -22,7 +22,7 @@ import android.graphics.drawable.Drawable;
  * <p>
  * Necessary to resolve circular dependency between base CardView and platform implementations.
  */
-interface CardViewDelegate {
+public interface CardViewDelegate {
 
     void setRawPadding(int left, int top, int right, int bottom);
 

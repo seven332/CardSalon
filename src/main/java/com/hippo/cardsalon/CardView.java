@@ -45,10 +45,15 @@ public class CardView extends FrameLayout implements CardViewDelegate {
         mCardHelper.initialize(context, attrs);
     }
 
+    @Override
+    public void setBackgroundResource(int resid) {
+        // Empty
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public void setBackgroundDrawable(Drawable drawable) {
-        throw new IllegalStateException("Can't set background drawable directly.");
+        // Empty
     }
 
     @Override
