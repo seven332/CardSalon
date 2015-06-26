@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CardHelper">
+        <attr name="cardBackgroundColor" format="color"/>
+        <attr name="cardCornerRadius" format="dimension"/>
+        <attr name="cardBoundColor" format="color"/>
+        <attr name="cardBoundSize" format="dimension"/>
+        <attr name="cardElevation" format="dimension"/>
+        <attr name="forceNoElevation" format="boolean"/>
+    </declare-styleable>
+
+</resources>
