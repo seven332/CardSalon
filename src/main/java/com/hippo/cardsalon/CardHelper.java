@@ -66,9 +66,19 @@ public class CardHelper {
         mElevation = a.getDimension(R.styleable.CardHelper_cardElevation,
                 context.getResources().getDimension(R.dimen.default_card_elevation));
         mImpl.initialize(this, context, mBackgroundColor, mRadius, mBoundColor, mBoundSize, mElevation);
-        mImpl.updatePadding(this);
+        initPadding();
 
         a.recycle();
+    }
+
+    private void initPadding() {
+        View view = (View) mDelegate;
+        mOriginalPaddingLeft = view.getPaddingLeft();
+        mOriginalPaddingTop = view.getPaddingTop();
+        mOriginalPaddingRight = view.getPaddingRight();
+        mOriginalPaddingBottom = view.getPaddingBottom();
+
+        mImpl.updatePadding(this);
     }
 
     CardViewDelegate getDelegate() {

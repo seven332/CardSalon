@@ -24,10 +24,6 @@ import android.widget.FrameLayout;
 public class CardView extends FrameLayout implements CardViewDelegate {
 
     private CardHelper mCardHelper;
-    private int mInitPaddingLeft;
-    private int mInitPaddingTop;
-    private int mInitPaddingRight;
-    private int mInitPaddingBottom;
 
     public CardView(Context context) {
         super(context);
@@ -47,9 +43,6 @@ public class CardView extends FrameLayout implements CardViewDelegate {
     private void init(Context context, AttributeSet attrs) {
         mCardHelper = new CardHelper(this);
         mCardHelper.initialize(context, attrs);
-        mCardHelper.setPadding(mInitPaddingLeft,
-                mInitPaddingTop, mInitPaddingRight,
-                mInitPaddingBottom);
     }
 
     @Override
@@ -65,12 +58,7 @@ public class CardView extends FrameLayout implements CardViewDelegate {
 
     @Override
     public void setPadding(int left, int top, int right, int bottom) {
-        if (mCardHelper == null) {
-            mInitPaddingLeft = left;
-            mInitPaddingTop = top;
-            mInitPaddingRight = right;
-            mInitPaddingBottom = bottom;
-        } else {
+        if (mCardHelper != null) {
             mCardHelper.setPadding(left, top, right, bottom);
         }
     }
@@ -80,6 +68,7 @@ public class CardView extends FrameLayout implements CardViewDelegate {
         super.setPadding(left, top, right, bottom);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void setRawBackgroundDrawable(Drawable drawable) {
         super.setBackgroundDrawable(drawable);
