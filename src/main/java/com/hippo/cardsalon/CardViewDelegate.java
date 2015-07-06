@@ -24,7 +24,9 @@ import android.graphics.drawable.Drawable;
  */
 public interface CardViewDelegate {
 
-    void setRawPadding(int left, int top, int right, int bottom);
+    void setCardPadding(int left, int top, int right, int bottom);
+
+    void setPadding(int left, int top, int right, int bottom);
 
     void setRawBackgroundDrawable(Drawable drawable);
 

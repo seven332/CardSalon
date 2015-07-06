@@ -74,7 +74,8 @@ class CardViewEclairMr1 implements CardViewImpl {
     public void initialize(CardHelper cardHelper, Context context, int backgroundColor,
             float radius, int boundColor, float boundSize, float elevation) {
         final RoundRectDrawableWithShadow backgroundDrawable =
-                new RoundRectDrawableWithShadow(backgroundColor, radius, boundColor, boundSize, elevation);
+                new RoundRectDrawableWithShadow(backgroundColor, radius,
+                        boundColor, boundSize, Math.round(elevation * 1.5));
         cardHelper.setBackgroundDrawable(backgroundDrawable);
 
         CardViewDelegate delegate = cardHelper.getDelegate();
@@ -86,7 +87,7 @@ class CardViewEclairMr1 implements CardViewImpl {
         RoundRectDrawableWithShadow drawable = (RoundRectDrawableWithShadow) cardHelper.getBackgroundDrawable();
         float boundSize = drawable.getBoundSize();
         CardViewDelegate delegate = cardHelper.getDelegate();
-        delegate.setRawPadding(
+        delegate.setPadding(
                 cardHelper.getOriginalPaddingLeft() + Math.round(boundSize + drawable.getExtraPaddingLeft()),
                 cardHelper.getOriginalPaddingTop() + Math.round(boundSize + drawable.getExtraPaddingTop()),
                 cardHelper.getOriginalPaddingRight() + Math.round(boundSize + drawable.getExtraPaddingRight()),

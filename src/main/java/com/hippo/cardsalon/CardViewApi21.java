@@ -47,7 +47,7 @@ class CardViewApi21 implements CardViewImpl {
     public void updatePadding(CardHelper cardHelper) {
         int boundSize = Math.round(((RoundRectDrawable) cardHelper.getBackgroundDrawable()).getBoundSize());
         CardViewDelegate delegate = cardHelper.getDelegate();
-        delegate.setRawPadding(cardHelper.getOriginalPaddingLeft() + boundSize,
+        delegate.setPadding(cardHelper.getOriginalPaddingLeft() + boundSize,
                 cardHelper.getOriginalPaddingTop() + boundSize,
                 cardHelper.getOriginalPaddingRight() + boundSize,
                 cardHelper.getOriginalPaddingBottom() + boundSize);
