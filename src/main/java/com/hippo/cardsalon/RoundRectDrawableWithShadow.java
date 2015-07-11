@@ -42,8 +42,13 @@ class RoundRectDrawableWithShadow extends Drawable {
      */
     static RoundRectHelper sRoundRectHelper;
 
-    private static int SHADOW_START_COLOR = 0x38000000;
+    private static int SHADOW_START_COLOR = 0x32000000;
+    private static int SHADOW_HALF_COLOR = 0x19000000;
+    private static int SHADOW_QUARTER_COLOR = 0x0C000000;
     private static int SHADOW_END_COLOR = Color.TRANSPARENT;
+
+    private static float SHADOW_HALF_SCALE = 3f/8f;
+    private static float SHADOW_QUARTER_SCALE = 5f/8f;
 
     private final Paint mPaint;
     private final Paint mBoundPaint;
@@ -188,24 +193,28 @@ class RoundRectDrawableWithShadow extends Drawable {
         mCornerShadowPath.close();
         float startRatio = cornerRadius / (cornerRadius + elevation);
         mCornerShadowPaint.setShader(new RadialGradient(0, 0, cornerRadius + elevation,
-                new int[]{SHADOW_START_COLOR, SHADOW_START_COLOR, SHADOW_END_COLOR},
-                new float[]{0f, startRatio, 1f}, Shader.TileMode.CLAMP));
+                new int[]{SHADOW_START_COLOR, SHADOW_START_COLOR, SHADOW_HALF_COLOR,
+                        SHADOW_QUARTER_COLOR, SHADOW_END_COLOR},
+                new float[]{0f, startRatio, MathUtils.lerp(startRatio, 1f, SHADOW_HALF_SCALE),
+                        MathUtils.lerp(startRatio, 1f, SHADOW_QUARTER_SCALE), 1f}, Shader.TileMode.CLAMP));
 
         // we offset the content shadowSize/2 pixels up to make it more realistic.
         // this is why edge shadow shader has some extra space
         // When drawing bottom edge shadow, we use that extra space.
         mEdgeShadowPaint.setShader(new LinearGradient(0, -cornerRadius + elevation, 0,
                 -cornerRadius - elevation,
-                new int[]{SHADOW_START_COLOR, SHADOW_START_COLOR, SHADOW_END_COLOR},
-                new float[]{0f, 0.5f, 1f}, Shader.TileMode.CLAMP));
+                new int[]{SHADOW_START_COLOR, SHADOW_START_COLOR, SHADOW_HALF_COLOR,
+                        SHADOW_QUARTER_COLOR, SHADOW_END_COLOR},
+                new float[]{0f, 0.5f, MathUtils.lerp(0.5f, 1f, SHADOW_HALF_SCALE),
+                        MathUtils.lerp(0.5f, 1f, SHADOW_QUARTER_SCALE), 1f}, Shader.TileMode.CLAMP));
         mEdgeShadowPaint.setAntiAlias(false);
     }
 
     private void buildComponents(Rect bounds) {
         float elevation = mElevation;
-        mBoundRect.left = bounds.left + (elevation / 2);
-        mBoundRect.top = bounds.top + (elevation / 4);
-        mBoundRect.right = bounds.right - (elevation / 2);
+        mBoundRect.left = bounds.left + (elevation * 0.9f);
+        mBoundRect.top = bounds.top + (elevation * 0.55f);
+        mBoundRect.right = bounds.right - (elevation * 0.55f);
         mBoundRect.bottom = bounds.bottom - elevation;
 
         mInnerRect.set(mBoundRect);
