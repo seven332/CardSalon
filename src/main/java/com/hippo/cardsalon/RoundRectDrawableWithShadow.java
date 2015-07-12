@@ -50,6 +50,11 @@ class RoundRectDrawableWithShadow extends Drawable {
     private static float SHADOW_HALF_SCALE = 3f/8f;
     private static float SHADOW_QUARTER_SCALE = 5f/8f;
 
+    private static float SHADOW_LEFT_SCALE = 0.9f;
+    private static float SHADOW_TOP_SCALE = 0.55f;
+    private static float SHADOW_RIGHT_SCALE = 0.55f;
+    private static float SHADOW_BOTTOM_SCALE = 1f;
+
     private final Paint mPaint;
     private final Paint mBoundPaint;
     private final Paint mCornerShadowPaint;
@@ -212,10 +217,10 @@ class RoundRectDrawableWithShadow extends Drawable {
 
     private void buildComponents(Rect bounds) {
         float elevation = mElevation;
-        mBoundRect.left = bounds.left + (elevation * 0.9f);
-        mBoundRect.top = bounds.top + (elevation * 0.55f);
-        mBoundRect.right = bounds.right - (elevation * 0.55f);
-        mBoundRect.bottom = bounds.bottom - elevation;
+        mBoundRect.left = bounds.left + (elevation * SHADOW_LEFT_SCALE);
+        mBoundRect.top = bounds.top + (elevation * SHADOW_TOP_SCALE);
+        mBoundRect.right = bounds.right - (elevation * SHADOW_RIGHT_SCALE);
+        mBoundRect.bottom = bounds.bottom - (elevation * SHADOW_BOTTOM_SCALE);
 
         mInnerRect.set(mBoundRect);
         mInnerRect.inset(mBoundSize, mBoundSize);
@@ -224,19 +229,19 @@ class RoundRectDrawableWithShadow extends Drawable {
     }
 
     float getExtraPaddingLeft() {
-        return mElevation / 2;
+        return mElevation * SHADOW_LEFT_SCALE;
     }
 
     float getExtraPaddingTop() {
-        return mElevation / 4;
+        return mElevation * SHADOW_TOP_SCALE;
     }
 
     float getExtraPaddingRight() {
-        return mElevation / 2;
+        return mElevation * SHADOW_RIGHT_SCALE;
     }
 
     float getExtraPaddingBottom() {
-        return mElevation;
+        return mElevation * SHADOW_BOTTOM_SCALE;
     }
 
     @Override
