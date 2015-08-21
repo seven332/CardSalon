@@ -16,6 +16,7 @@
 
 package com.hippo.cardsalon;
 
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -28,6 +29,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.hippo.yorozuya.MathUtils;
 
@@ -57,6 +59,12 @@ class RoundRectDrawableWithShadow extends Drawable {
     private static float SHADOW_RIGHT_SCALE = 0.55f;
     private static float SHADOW_BOTTOM_SCALE = 1f;
 
+    private ColorStateList mBackgroundColor;
+    private ColorStateList mBoundColor;
+
+    private int mCurrentBackgroundColor;
+    private int mCurrentBoundColor;
+
     private final Paint mPaint;
     private final Paint mBoundPaint;
     private final Paint mCornerShadowPaint;
@@ -75,13 +83,18 @@ class RoundRectDrawableWithShadow extends Drawable {
     private final RectF mTempInnerRectF;
     private final RectF mTempOuterRectF;
 
-    public RoundRectDrawableWithShadow(int backgroundColor, float radius,
-            int boundColor, float boundSize, float elevation) {
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        mPaint.setColor(backgroundColor);
+    public RoundRectDrawableWithShadow(ColorStateList backgroundColor, float radius,
+            ColorStateList boundColor, float boundSize, float elevation) {
+        mBackgroundColor = backgroundColor;
+        mBoundColor = boundColor;
 
+        mCurrentBackgroundColor = Color.WHITE;
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        mPaint.setColor(mCurrentBackgroundColor);
+
+        mCurrentBoundColor = Color.WHITE;
         mBoundPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        mBoundPaint.setColor(boundColor);
+        mBoundPaint.setColor(mCurrentBoundColor);
 
         mCornerShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mCornerShadowPaint.setStyle(Paint.Style.FILL);
@@ -99,6 +112,32 @@ class RoundRectDrawableWithShadow extends Drawable {
 
         mTempInnerRectF = new RectF();
         mTempOuterRectF = new RectF();
+    }
+
+    @Override
+    public boolean isStateful() {
+        return true;
+    }
+
+    @Override
+    protected boolean onStateChange(int[] state) {
+        boolean result = super.onStateChange(state);
+
+        int backgroundColor = mBackgroundColor.getColorForState(state, Color.WHITE);
+        if (mCurrentBackgroundColor != backgroundColor) {
+            mCurrentBackgroundColor = backgroundColor;
+            mPaint.setColor(backgroundColor);
+            result |= true;
+        }
+
+        int boundColor = mBoundColor.getColorForState(state, Color.WHITE);
+        if (mCurrentBoundColor != boundColor) {
+            mCurrentBoundColor = boundColor;
+            mBoundPaint.setColor(boundColor);
+            result |= true;
+        }
+
+        return result;
     }
 
     @Override
@@ -267,8 +306,9 @@ class RoundRectDrawableWithShadow extends Drawable {
         invalidateSelf();
     }
 
-    public void setColor(int color) {
-        mPaint.setColor(color);
+    public void setColor(ColorStateList color) {
+        mBackgroundColor = color;
+        mPaint.setColor(color.getColorForState(getState(), Color.WHITE));
         invalidateSelf();
     }
 
@@ -282,8 +322,9 @@ class RoundRectDrawableWithShadow extends Drawable {
         return mBoundSize;
     }
 
-    public void setBoundColor(int color) {
-        mBoundPaint.setColor(color);
+    public void setBoundColor(ColorStateList color) {
+        mBoundColor = color;
+        mBoundPaint.setColor(color.getColorForState(getState(), Color.WHITE));
         invalidateSelf();
     }
 

@@ -17,6 +17,7 @@
 package com.hippo.cardsalon;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -80,12 +81,12 @@ public class CardView extends FrameLayout implements CardViewDelegate {
     }
 
     @Override
-    public void setCardBackgroundColor(int color) {
+    public void setCardBackgroundColor(ColorStateList color) {
         mCardHelper.setCardBackgroundColor(color);
     }
 
     @Override
-    public int getCardBackgroundColor() {
+    public ColorStateList getCardBackgroundColor() {
         return mCardHelper.getCardBackgroundColor();
     }
 
@@ -100,12 +101,12 @@ public class CardView extends FrameLayout implements CardViewDelegate {
     }
 
     @Override
-    public void setCardBoundColor(int color) {
+    public void setCardBoundColor(ColorStateList color) {
         mCardHelper.setCardBoundColor(color);
     }
 
     @Override
-    public int getCardBoundColor() {
+    public ColorStateList getCardBoundColor() {
         return mCardHelper.getCardBoundColor();
     }
 

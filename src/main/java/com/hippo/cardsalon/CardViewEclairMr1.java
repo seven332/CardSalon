@@ -17,6 +17,7 @@
 package com.hippo.cardsalon;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -71,8 +72,8 @@ class CardViewEclairMr1 implements CardViewImpl {
     }
 
     @Override
-    public void initialize(CardHelper cardHelper, Context context, int backgroundColor,
-            float radius, int boundColor, float boundSize, float elevation) {
+    public void initialize(CardHelper cardHelper, Context context, ColorStateList backgroundColor,
+            float radius, ColorStateList boundColor, float boundSize, float elevation) {
         final RoundRectDrawableWithShadow backgroundDrawable =
                 new RoundRectDrawableWithShadow(backgroundColor, radius,
                         boundColor, boundSize, Math.round(elevation));
@@ -101,7 +102,7 @@ class CardViewEclairMr1 implements CardViewImpl {
     }
 
     @Override
-    public void setBackgroundColor(CardHelper cardHelper, int color) {
+    public void setBackgroundColor(CardHelper cardHelper, ColorStateList color) {
         RoundRectDrawableWithShadow drawable = (RoundRectDrawableWithShadow) cardHelper.getBackgroundDrawable();
         drawable.setColor(color);
     }
@@ -113,7 +114,7 @@ class CardViewEclairMr1 implements CardViewImpl {
     }
 
     @Override
-    public void setBoundColor(CardHelper cardHelper, int color) {
+    public void setBoundColor(CardHelper cardHelper, ColorStateList color) {
         RoundRectDrawableWithShadow drawable = (RoundRectDrawableWithShadow) cardHelper.getBackgroundDrawable();
         drawable.setBoundColor(color);
     }

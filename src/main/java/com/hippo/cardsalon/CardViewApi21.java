@@ -17,6 +17,7 @@ package com.hippo.cardsalon;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.view.View;
 
@@ -28,8 +29,8 @@ class CardViewApi21 implements CardViewImpl {
     }
 
     @Override
-    public void initialize(CardHelper cardHelper, Context context, int backgroundColor,
-            float radius, int boundColor, float boundSize, float elevation) {
+    public void initialize(CardHelper cardHelper, Context context, ColorStateList backgroundColor,
+            float radius, ColorStateList boundColor, float boundSize, float elevation) {
         final RoundRectDrawable backgroundDrawable =
                 new RoundRectDrawable(backgroundColor, radius, boundColor, boundSize);
         cardHelper.setBackgroundDrawable(backgroundDrawable);
@@ -55,25 +56,25 @@ class CardViewApi21 implements CardViewImpl {
 
     @Override
     public void setCornerRadius(CardHelper cardHelper, float radius) {
-        RoundRectDrawableWithShadow drawable = (RoundRectDrawableWithShadow) cardHelper.getBackgroundDrawable();
+        RoundRectDrawable drawable = (RoundRectDrawable) cardHelper.getBackgroundDrawable();
         drawable.setCornerRadius(radius);
     }
 
     @Override
-    public void setBackgroundColor(CardHelper cardHelper, int color) {
-        RoundRectDrawableWithShadow drawable = (RoundRectDrawableWithShadow) cardHelper.getBackgroundDrawable();
+    public void setBackgroundColor(CardHelper cardHelper, ColorStateList color) {
+        RoundRectDrawable drawable = (RoundRectDrawable) cardHelper.getBackgroundDrawable();
         drawable.setColor(color);
     }
 
     @Override
     public void setBoundSize(CardHelper cardHelper, float size) {
-        RoundRectDrawableWithShadow drawable = (RoundRectDrawableWithShadow) cardHelper.getBackgroundDrawable();
+        RoundRectDrawable drawable = (RoundRectDrawable) cardHelper.getBackgroundDrawable();
         drawable.setBoundSize(size);
     }
 
     @Override
-    public void setBoundColor(CardHelper cardHelper, int color) {
-        RoundRectDrawableWithShadow drawable = (RoundRectDrawableWithShadow) cardHelper.getBackgroundDrawable();
+    public void setBoundColor(CardHelper cardHelper, ColorStateList color) {
+        RoundRectDrawable drawable = (RoundRectDrawable) cardHelper.getBackgroundDrawable();
         drawable.setBoundColor(color);
     }
 

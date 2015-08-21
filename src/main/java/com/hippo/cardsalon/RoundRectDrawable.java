@@ -16,7 +16,9 @@
 package com.hippo.cardsalon;
 
 import android.annotation.TargetApi;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Outline;
 import android.graphics.Paint;
@@ -36,6 +38,12 @@ import android.support.annotation.NonNull;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class RoundRectDrawable extends Drawable {
 
+    private ColorStateList mBackgroundColor;
+    private ColorStateList mBoundColor;
+
+    private int mCurrentBackgroundColor;
+    private int mCurrentBoundColor;
+
     private float mRadius;
     private final Paint mPaint;
     private final Rect mBounds;
@@ -47,17 +55,51 @@ class RoundRectDrawable extends Drawable {
 
     private boolean mDirty = true;
 
-    public RoundRectDrawable(int backgroundColor, float radius, int boundColor, float boundSize) {
+    public RoundRectDrawable(ColorStateList backgroundColor, float radius, ColorStateList boundColor, float boundSize) {
+        mBackgroundColor = backgroundColor;
+        mBoundColor = boundColor;
+
         mRadius = radius;
+
+        mCurrentBackgroundColor = Color.WHITE;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        mPaint.setColor(backgroundColor);
+        mPaint.setColor(mCurrentBackgroundColor);
+
         mBounds = new Rect();
         mBoundsF = new RectF();
 
+        mCurrentBoundColor = Color.WHITE;
         mBoundPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        mBoundPaint.setColor(boundColor);
+        mBoundPaint.setColor(mCurrentBoundColor);
+
         mBoundSize = boundSize;
         mInnerF = new RectF();
+    }
+
+    @Override
+    public boolean isStateful() {
+        return true;
+    }
+
+    @Override
+    protected boolean onStateChange(int[] state) {
+        boolean result = super.onStateChange(state);
+
+        int backgroundColor = mBackgroundColor.getColorForState(state, Color.WHITE);
+        if (mCurrentBackgroundColor != backgroundColor) {
+            mCurrentBackgroundColor = backgroundColor;
+            mPaint.setColor(backgroundColor);
+            result |= true;
+        }
+
+        int boundColor = mBoundColor.getColorForState(state, Color.WHITE);
+        if (mCurrentBoundColor != boundColor) {
+            mCurrentBoundColor = boundColor;
+            mBoundPaint.setColor(boundColor);
+            result |= true;
+        }
+
+        return result;
     }
 
     private boolean isDrawBounds() {
@@ -132,8 +174,9 @@ class RoundRectDrawable extends Drawable {
         invalidateSelf();
     }
 
-    public void setColor(int color) {
-        mPaint.setColor(color);
+    public void setColor(ColorStateList color) {
+        mBackgroundColor = color;
+        mPaint.setColor(color.getColorForState(getState(), Color.WHITE));
         invalidateSelf();
     }
 
@@ -147,8 +190,9 @@ class RoundRectDrawable extends Drawable {
         return mBoundSize;
     }
 
-    public void setBoundColor(int color) {
-        mBoundPaint.setColor(color);
+    public void setBoundColor(ColorStateList color) {
+        mBoundColor = color;
+        mBoundPaint.setColor(color.getColorForState(getState(), Color.WHITE));
         invalidateSelf();
     }
 }

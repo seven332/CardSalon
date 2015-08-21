@@ -1,6 +1,7 @@
 package com.hippo.cardsalon;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -36,9 +37,9 @@ public class CardHelper {
 
     private Drawable mBackgroundDrawable;
 
-    private int mBackgroundColor;
+    private ColorStateList mBackgroundColor;
     private float mRadius;
-    private int mBoundColor;
+    private ColorStateList mBoundColor;
     private float mBoundSize;
     private float mElevation;
 
@@ -58,10 +59,16 @@ public class CardHelper {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CardHelper);
 
         mImpl = a.getBoolean(R.styleable.CardHelper_forceNoElevation, false) ? NO_ELEVATION_IMPL : IMPL;
-        mBackgroundColor = a.getColor(R.styleable.CardHelper_cardBackgroundColor, Color.WHITE);
+        mBackgroundColor = a.getColorStateList(R.styleable.CardHelper_cardBackgroundColor);
+        if (mBackgroundColor == null) {
+            mBackgroundColor = ColorStateList.valueOf(a.getColor(R.styleable.CardHelper_cardBackgroundColor, Color.WHITE));
+        }
         mRadius = a.getDimension(R.styleable.CardHelper_cardCornerRadius,
                 context.getResources().getDimension(R.dimen.default_card_corner_radius));
-        mBoundColor = a.getColor(R.styleable.CardHelper_cardBoundColor, Color.TRANSPARENT);
+        mBoundColor = a.getColorStateList(R.styleable.CardHelper_cardBoundColor);
+        if (mBoundColor == null) {
+            mBoundColor = ColorStateList.valueOf(a.getColor(R.styleable.CardHelper_cardBoundColor, Color.WHITE));
+        }
         mBoundSize = a.getDimension(R.styleable.CardHelper_cardBoundSize, 0f);
         mElevation = a.getDimension(R.styleable.CardHelper_cardElevation,
                 context.getResources().getDimension(R.dimen.default_card_elevation));
@@ -131,14 +138,14 @@ public class CardHelper {
         return mRadius;
     }
 
-    public void setCardBackgroundColor(int color) {
+    public void setCardBackgroundColor(ColorStateList color) {
         if (mBackgroundColor != color) {
             mBackgroundColor = color;
             mImpl.setBackgroundColor(this, color);
         }
     }
 
-    public int getCardBackgroundColor() {
+    public ColorStateList getCardBackgroundColor() {
         return mBackgroundColor;
     }
 
@@ -153,14 +160,14 @@ public class CardHelper {
         return mBoundSize;
     }
 
-    public void setCardBoundColor(int color) {
+    public void setCardBoundColor(ColorStateList color) {
         if (mBoundColor != color) {
             mBoundColor = color;
             mImpl.setBoundColor(this, color);
         }
     }
 
-    public int getCardBoundColor() {
+    public ColorStateList getCardBoundColor() {
         return mBoundColor;
     }
 

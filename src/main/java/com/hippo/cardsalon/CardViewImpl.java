@@ -16,6 +16,7 @@
 package com.hippo.cardsalon;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 
 /**
  * Interface for platform specific CardView implementations.
@@ -24,18 +25,18 @@ interface CardViewImpl {
 
     void initStatic();
 
-    void initialize(CardHelper cardHelper, Context context, int backgroundColor,
-            float radius, int boundColor, float boundSize, float elevation);
+    void initialize(CardHelper cardHelper, Context context, ColorStateList backgroundColor,
+            float radius, ColorStateList boundColor, float boundSize, float elevation);
 
     void updatePadding(CardHelper cardHelper);
 
     void setCornerRadius(CardHelper cardHelper, float radius);
 
-    void setBackgroundColor(CardHelper cardHelper, int color);
+    void setBackgroundColor(CardHelper cardHelper, ColorStateList color);
 
     void setBoundSize(CardHelper cardHelper, float size);
 
-    void setBoundColor(CardHelper cardHelper, int color);
+    void setBoundColor(CardHelper cardHelper, ColorStateList color);
 
     void setElevation(CardHelper cardHelper, float elevation);
 }

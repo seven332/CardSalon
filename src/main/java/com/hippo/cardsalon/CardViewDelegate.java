@@ -15,6 +15,7 @@
  */
 package com.hippo.cardsalon;
 
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -34,17 +35,17 @@ public interface CardViewDelegate {
 
     float getCardRadius();
 
-    void setCardBackgroundColor(int color);
+    void setCardBackgroundColor(ColorStateList color);
 
-    int getCardBackgroundColor();
+    ColorStateList getCardBackgroundColor();
 
     void setCardBoundSize(float size);
 
     float getCardBoundSize();
 
-    void setCardBoundColor(int color);
+    void setCardBoundColor(ColorStateList color);
 
-    int getCardBoundColor();
+    ColorStateList getCardBoundColor();
 
     void setCardElevation(float elevation);
 
