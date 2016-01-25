@@ -29,7 +29,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import com.hippo.yorozuya.MathUtils;
 
@@ -108,7 +107,7 @@ class RoundRectDrawableWithShadow extends Drawable {
 
         mCornerRadius = radius;
         mBoundSize = boundSize;
-        mElevation = elevation;
+        mElevation = elevation * 2;
 
         mTempInnerRectF = new RectF();
         mTempOuterRectF = new RectF();
